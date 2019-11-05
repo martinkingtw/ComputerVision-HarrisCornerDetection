@@ -1,5 +1,4 @@
 Name: King Min Hao
-UID: 3035453103
 
 All features are implemented.
 
@@ -15,6 +14,3 @@ Construct an image of the cornerness function R correctly
 Identify potential corners at local maxima in the image of the cornerness function R.
 Compute the cornerness value and coordinates of the potential corners up to sub-pixel accuract by quadratic approximation.
 Use the threshold value to identify strong corners for output.
-
-Note:
-Change "from scipy.ndimage import c" into "from scipy.ndimage import convolve1d".
