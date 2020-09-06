@@ -137,9 +137,9 @@ def load(inputfile) :
 ################################################################################
 def main() :
     parser = argparse.ArgumentParser(description = 'Harris Corner Detection')
-    parser.add_argument('-i', '--inputfile', type = str, default = 'grid1.jpg', help = 'filename of input image')
+    parser.add_argument('-i', '--inputfile', type = str, default = 'table.jpg', help = 'filename of input image')
     parser.add_argument('-s', '--sigma', type = float, default = 1.0, help = 'sigma value for Gaussain filter')
-    parser.add_argument('-t', '--threshold', type = float, default = 1e6, help = 'threshold value for corner detection')
+    parser.add_argument('-t', '--threshold', type = float, default = 1e5, help = 'threshold value for corner detection')
     parser.add_argument('-o', '--outputfile', type = str, help = 'filename for outputting corner detection result')
     args = parser.parse_args()
 

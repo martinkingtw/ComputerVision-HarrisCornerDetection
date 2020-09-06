@@ -14,11 +14,11 @@ pip install numpy; pip install matplotlib; pip install scipy;
 py harrisCornerDetection.py
 ```
 
-* -i INPUTFILE, --inputfile INPUTFILE: filename of input image
-* -s SIGMA, --sigma SIGMA: sigma value for Gaussian filter
+* -i INPUTFILE, --inputfile INPUTFILE:    filename of input image
+* -s SIGMA, --sigma SIGMA:                sigma value for Gaussian filter
   * A higher sigma *blurs* the image more, making less corners.
-* -t THRESHOLD, --threshold THRESHOLD: threshold value for corner detection
-  * A higher threshold accepts more potential corners, making more corners.
+* -t THRESHOLD, --threshold THRESHOLD:    threshold value for corner detection
+  * A higher threshold rejects more potential corners, making less corners.
 * -o OUTPUTFILE, --outputfile OUTPUTFILE: filename of output results
 
 ## Implementation
