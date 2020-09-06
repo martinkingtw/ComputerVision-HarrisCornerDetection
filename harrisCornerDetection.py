@@ -1,7 +1,5 @@
-################################################################################
-# COMP3317 Computer Vision
-# Assignment 2 - Conrner detection
-################################################################################
+# Harris Corner Detection
+
 import sys
 import argparse
 import numpy as np
@@ -20,7 +18,6 @@ def rgb2gray(img_color) :
     # return:
     #    img_gray - a h x w numpy ndarray (dtype = np.float64) holding
     #               the grayscale image
-    # TODO: using the Y channel of the YIQ model to perform the conversion
     img_gray = img_color @ rgbToYiqY
     return img_gray
 
@@ -34,9 +31,6 @@ def smooth1D(img, sigma) :
     # return:
     #    img_smoothed - a h x w numpy ndarry holding the 1D smoothing result
 
-
-    # TODO: form a 1D horizontal Guassian filter of an appropriate size
-    # 2147483647 is the largest int.
     size = 2147483647
     for i in range(2147483647):
         if np.exp((i ** 2) / -2 / (sigma ** 2)) < 1 / 1000:
@@ -44,8 +38,6 @@ def smooth1D(img, sigma) :
             break
     x = np.arange(-size, size+1)
     filterSmooth = np.exp((x ** 2) / -2 / (sigma ** 2))
-    # TODO: convolve the 1D filter with the image;
-    #       apply partial filter for the image border
     img_filtered = convolve1d(img, filterSmooth, mode='constant')
     img_weighted = convolve1d(np.ones(img.shape), filterSmooth, mode='constant')
     img_smoothed = img_filtered / img_weighted
@@ -60,9 +52,7 @@ def smooth2D(img, sigma) :
     #    sigma - sigma value of the Gaussian function
     # return:
     #    img_smoothed - a h x w numpy array holding the 2D smoothing result
-    # TODO: smooth the image along the vertical direction
     img = smooth1D(img, sigma)
-    # TODO: smooth the image along the horizontal direction
     img = smooth1D(img.T, sigma)
     img_smoothed = img.T
     return img_smoothed
@@ -79,22 +69,16 @@ def harris(img, sigma, threshold) :
     #    corners - a list of tuples (x, y, r) specifying the coordinates
     #              (up to sub-pixel accuracy) and cornerness value of each corner
 
-    # TODO: compute Ix & Iy
     ix, iy = np.gradient(img)
-    # TODO: compute Ix2, Iy2 and IxIy
     ix2 = ix * ix
     iy2 = iy * iy
     ixIy = ix * iy
-    # TODO: smooth the squared derivatives
     ix2 = smooth2D(ix2, sigma)
     iy2 = smooth2D(iy2, sigma)
     ixIy = smooth2D(ixIy, sigma)
-    # TODO: compute cornesness functoin R
     detA = ix2 * iy2 - ixIy * ixIy
     traceA = ix2 + iy2
     r = detA - 0.04 * (traceA ** 2)
-    # TODO: mark local maxima as corner candidates;
-    #       perform quadratic approximation to local corners upto sub-pixel accuracy
     cornerCandidates = []
     corners = []
     for i in range(1, r.shape[0] - 1):
@@ -110,7 +94,6 @@ def harris(img, sigma, threshold) :
         x = -c / 2 / a
         y = -d / 2 / b
         f = a * (x ** 2) + b * (y ** 2) + c * x + d * y + e
-    # TODO: perform thresholding and discard weak corners
         if i[2] >= threshold:
             corners.append((i[1] + x, i[0] + y, f))
     return sorted(corners, key = lambda corner : corner[2], reverse = True)
@@ -153,7 +136,7 @@ def load(inputfile) :
 ## main
 ################################################################################
 def main() :
-    parser = argparse.ArgumentParser(description = 'COMP3317 Assignment 2')
+    parser = argparse.ArgumentParser(description = 'Harris Corner Detection')
     parser.add_argument('-i', '--inputfile', type = str, default = 'grid1.jpg', help = 'filename of input image')
     parser.add_argument('-s', '--sigma', type = float, default = 1.0, help = 'sigma value for Gaussain filter')
     parser.add_argument('-t', '--threshold', type = float, default = 1e6, help = 'threshold value for corner detection')
@@ -161,7 +144,6 @@ def main() :
     args = parser.parse_args()
 
     print('------------------------------')
-    print('COMP3317 Assignment 2')
     print('input file : %s' % args.inputfile)
     print('sigma      : %.2f' % args.sigma)
     print('threshold  : %.2e' % args.threshold)
@@ -180,18 +162,15 @@ def main() :
     # plt.imshow(np.uint8(img_color))
     # plt.show()
 
-    # perform RGB to gray conversion
     print('perform RGB to grayscale conversion...')
     img_gray = rgb2gray(img_color)
     # uncomment the following 2 lines to show the grayscale image
     # plt.imshow(np.float32(img_gray), cmap = 'gray')
     # plt.show()
 
-    # perform corner detection
     print('perform Harris corner detection...')
     corners = harris(img_gray, args.sigma, args.threshold)
 
-    # plot the corners
     print('%d corners detected...' % len(corners))
     x = [corner[0] for corner in corners]
     y = [corner[1] for corner in corners]
@@ -200,7 +179,6 @@ def main() :
     plt.plot(x, y,'r+',markersize = 5)
     plt.show()
 
-    # save corners to a file
     if args.outputfile :
         save(args.outputfile, corners)
         print('corners saved to \'%s\'...' % args.outputfile)
