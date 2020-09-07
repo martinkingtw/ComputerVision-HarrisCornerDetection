@@ -14,12 +14,14 @@ pip install numpy; pip install matplotlib; pip install scipy;
 py harrisCornerDetection.py
 ```
 
-* -i INPUTFILE, --inputfile INPUTFILE:    filename of input image
-* -s SIGMA, --sigma SIGMA:                sigma value for Gaussian filter
+* -i INPUTFILE, --inputfile INPUTFILE
+* -s SIGMA, --sigma SIGMA
+  * sigma value for Gaussian filter.
   * A higher sigma *blurs* the image more, making less corners.
-* -t THRESHOLD, --threshold THRESHOLD:    threshold value for corner detection
+* -t THRESHOLD, --threshold THRESHOLD
+  * threshold value for corner detection.
   * A higher threshold rejects more potential corners, making less corners.
-* -o OUTPUTFILE, --outputfile OUTPUTFILE: filename of output results
+* -o OUTPUTFILE, --outputfile OUTPUTFILE
 
 ## Implementation
 
@@ -34,3 +36,13 @@ py harrisCornerDetection.py
 * Identify potential corners at local maxima in the image of the cornerness function R.
 * Compute the cornerness value and coordinates of the potential corners up to sub-pixel accuract by quadratic approximation.
 * Use the threshold value to identify strong corners for output.
+
+## Example
+
+This is a picture of a table.
+
+![table input](https://github.com/martinkingtw/ComputerVision-HarrisCornerDetection/blob/master/table.jpg)
+
+This is the output of the program.
+
+![table output](https://github.com/martinkingtw/ComputerVision-HarrisCornerDetection/blob/master/tableOutput.jpg)
