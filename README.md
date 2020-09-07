@@ -39,7 +39,7 @@ py harrisCornerDetection.py
 
 ## Example
 
-This is a picture of a table.
+This is the input of the program.
 
 ![table input](https://github.com/martinkingtw/ComputerVision-HarrisCornerDetection/blob/master/table.jpg)
 
